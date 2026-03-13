@@ -1,0 +1,31 @@
+from collectors.base import BaseCollector
+from config.settings import PULSEDIVE_API_KEY
+
+
+class PulsediveCollector(BaseCollector):
+    name = "pulsedive"
+
+    supports_domain = True
+    supports_ipv4 = True
+    supports_ipv6 = True
+
+    BASE_URL = "https://pulsedive.com"
+    ENDPOINT = "/api/info.php"  # query string added in collect()
+
+    def __init__(self):
+        super().__init__()
+        self.api_key = PULSEDIVE_API_KEY
+
+    def collect(self, address: str) -> dict:
+        headers = {
+            "accept": "application/json",
+        }
+
+        url = f"{self.url()}?key={self.api_key}&indicator={address}&pretty=1"
+
+        response = self.session.get(url, headers=headers)
+
+        if response.ok:
+            return response.json()
+        else:
+            return {}
