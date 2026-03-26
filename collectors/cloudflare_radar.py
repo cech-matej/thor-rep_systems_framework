@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import CLOUDFLARE_RADAR_API_KEY, CLOUDFLARE_USERID
 from utils.ip import is_ipv4, is_ipv6
+from utils.verdict import Verdict
 
 
 class CloudflareRadarCollector(BaseCollector):
@@ -46,3 +47,13 @@ class CloudflareRadarCollector(BaseCollector):
         else:
             print(response.text)
             return { "malicious": None }
+
+    def classify(self, data: dict) -> Verdict:
+        malicious = data.get("malicious", None)
+
+        if malicious is None:
+            return Verdict.NO_DATA
+        elif malicious:
+            return Verdict.MALICIOUS
+        else:
+            return Verdict.BENIGN

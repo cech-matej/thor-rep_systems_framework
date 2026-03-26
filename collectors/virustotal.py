@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import VIRUSTOTAL_API_KEY
 from utils.ip import is_ipv4, is_ipv6
+from utils.verdict import Verdict
 
 
 class VirusTotalCollector(BaseCollector):
@@ -59,3 +60,17 @@ class VirusTotalCollector(BaseCollector):
             "undetected": -1,
             "harmless": -1,
         }
+
+    def classify(self, data: dict) -> Verdict:
+        malicious = data.get("malicious", -1)
+        suspicious = data.get("suspicious", -1)
+
+        # If at least one is -1, then no data was retrieved
+        if malicious < 0:
+            return Verdict.NO_DATA
+        elif malicious < 1 and suspicious < 2:
+            return Verdict.BENIGN
+        elif malicious < 2 and suspicious < 3:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

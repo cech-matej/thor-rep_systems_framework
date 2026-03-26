@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import HYBRID_ANALYSIS_API_KEY
 from utils.ip import is_ipv4, is_ipv6
+from utils.verdict import Verdict
 
 
 class HybridAnalysisCollector(BaseCollector):
@@ -102,3 +103,15 @@ class HybridAnalysisCollector(BaseCollector):
                 "avg_score": -1,
                 "null_score_cnt": -1,
             }
+
+    def classify(self, data: dict) -> Verdict:
+        worst_score = data.get("worst_score", -1)
+
+        if worst_score < 0:
+            return Verdict.NO_DATA
+        elif worst_score < 10:
+            return Verdict.BENIGN
+        elif worst_score < 50:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

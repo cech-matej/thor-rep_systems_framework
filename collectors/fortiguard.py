@@ -1,4 +1,5 @@
 from collectors.base import BaseCollector
+from utils.verdict import Verdict
 
 
 class FortiGuardCollector(BaseCollector):
@@ -32,3 +33,13 @@ class FortiGuardCollector(BaseCollector):
                 return { "spam": None }
         else:
             return { "spam": None }
+
+    def classify(self, data: dict) -> Verdict:
+        spam = data.get("spam", None)
+
+        if spam is None:
+            return Verdict.NO_DATA
+        elif spam:
+            return Verdict.MALICIOUS
+        else:
+            return Verdict.BENIGN

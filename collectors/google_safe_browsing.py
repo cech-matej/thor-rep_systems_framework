@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import GOOGLE_SAFE_BROWSING_API_KEY
 from utils.ip import is_ipv6
+from utils.verdict import Verdict
 
 
 class GoogleSafeBrowsingCollector(BaseCollector):
@@ -81,3 +82,23 @@ class GoogleSafeBrowsingCollector(BaseCollector):
                 "unwanted_software_cnt": -1,
                 "potentially_harmful_cnt": -1
             }
+
+    def classify(self, data: dict) -> Verdict:
+        unspecified_cnt = data.get("unspecified_cnt", -1)
+        malware_cnt = data.get("malware_cnt", -1)
+        social_engineering_cnt = data.get("social_engineering_cnt", -1)
+        unwanted_software_cnt = data.get("unwanted_software_cnt", -1)
+        potentially_harm_cnt = data.get("potentially_harmful_cnt", -1)
+
+        # If at least one count is -1, then all counts are -1 => no data for this entity
+        if malware_cnt < 0:
+            return Verdict.NO_DATA
+
+        sum_cnt = unspecified_cnt + malware_cnt + social_engineering_cnt + unwanted_software_cnt + potentially_harm_cnt
+
+        if sum_cnt == 0:
+            return Verdict.BENIGN
+        elif sum_cnt == 1:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

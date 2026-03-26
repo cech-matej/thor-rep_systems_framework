@@ -1,5 +1,6 @@
 from collectors.base import BaseCollector
 from config.settings import PULSEDIVE_API_KEY
+from utils.verdict import Verdict
 
 
 class PulsediveCollector(BaseCollector):
@@ -29,3 +30,15 @@ class PulsediveCollector(BaseCollector):
             return response.json()
         else:
             return {}
+
+    def classify(self, data: dict) -> Verdict:
+        risk = data.get("score", {}).get("risk", None)
+
+        if risk is None or risk == "unknown":
+            return Verdict.NO_DATA
+        elif risk == "none":
+            return Verdict.BENIGN
+        elif risk in ["low", "medium"]:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

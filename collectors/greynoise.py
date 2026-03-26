@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import GREYNOISE_API_KEY
 from utils.ip import is_ipv4
+from utils.verdict import Verdict
 
 
 class GreyNoiseCollector(BaseCollector):
@@ -34,3 +35,15 @@ class GreyNoiseCollector(BaseCollector):
             return response.json()
         else:
             return {}
+
+    def classify(self, data: dict) -> Verdict:
+        classification = data.get("classification", None)
+
+        if classification is None:
+            return Verdict.NO_DATA
+        elif classification == 'benign':
+            return Verdict.BENIGN
+        elif classification == 'unknown':
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

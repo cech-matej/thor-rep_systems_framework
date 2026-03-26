@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import CRIMINALIP_API_KEY
 from utils.ip import is_ipv4, is_ipv6
+from utils.verdict import Verdict
 
 
 class CriminalIPCollector(BaseCollector):
@@ -35,3 +36,15 @@ class CriminalIPCollector(BaseCollector):
             return response.json()
         else:
             return {}
+
+    def classify(self, data: dict) -> Verdict:
+        score_out = data.get("score", {}).get("outbound", None)
+
+        if score_out is None:
+            return Verdict.NO_DATA
+        elif score_out == "Safe":
+            return Verdict.BENIGN
+        elif score_out in ["Low", "Moderate"]:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

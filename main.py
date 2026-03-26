@@ -13,6 +13,7 @@ from collectors.nerd import NerdCollector
 from collectors.pulsedive import PulsediveCollector
 from collectors.threatfox import ThreatFoxCollector
 from collectors.virustotal import VirusTotalCollector
+from collectors.visualization.visualize import visualize
 from mock_api.run import run_mock_api
 from config.settings import MOCK_API_HOST, MOCK_API_PORT, USE_MOCK_API
 
@@ -116,3 +117,5 @@ if __name__ == "__main__":
             json.dump(enriched_domains, f, indent=2)
 
         print(f"Saved: {output_file}")
+
+    visualize(output_dir, show_values=True)

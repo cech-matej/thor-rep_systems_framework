@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import NERD_API_KEY
 from utils.ip import is_ipv4
+from utils.verdict import Verdict
 
 
 class NerdCollector(BaseCollector):
@@ -35,3 +36,15 @@ class NerdCollector(BaseCollector):
             return { "reputation": results.get("rep", -1) }
         else:
             return { "reputation": -1 }
+
+    def classify(self, data: dict) -> Verdict:
+        rep = data.get("reputation", -1)
+
+        if rep < 0:
+            return Verdict.NO_DATA
+        elif rep < 0.1:
+            return Verdict.BENIGN
+        elif rep < 0.5:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS

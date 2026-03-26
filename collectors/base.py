@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import requests
-from typing import List, Callable
 
 from config.settings import USE_MOCK_API, MOCK_API_BASE
 
@@ -14,11 +13,6 @@ class BaseCollector(ABC):
 
     BASE_URL = ""  # to be defined in child
     ENDPOINT = ""  # to be defined in child
-
-    # # Visualization defaults
-    # vis_labels: List[str] = []
-    # vis_colors: List[str] = []
-    # vis_classify: Callable = None  # function(data) -> List[int]
 
     def __init__(self):
         self.session = requests.Session()
@@ -40,8 +34,9 @@ class BaseCollector(ABC):
 
         return f"{base}{self.ENDPOINT}"
 
-    # # Visualization helper
-    # def classify_data(self, data: list) -> List[int]:
-    #     if self.vis_classify:
-    #         return self.vis_classify(data)
-    #     raise NotImplementedError("Collector has no classification function defined")
+    def classify(self, data: dict):
+        """
+        Convert collected data into a Verdict.
+        Must be implemented by each collector.
+        """
+        raise NotImplementedError

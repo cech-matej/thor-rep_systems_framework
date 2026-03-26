@@ -1,6 +1,7 @@
 from collectors.base import BaseCollector
 from config.settings import THREATFOX_API_KEY
 from utils.ip import is_ipv6
+from utils.verdict import Verdict
 
 
 class ThreatFoxCollector(BaseCollector):
@@ -56,3 +57,15 @@ class ThreatFoxCollector(BaseCollector):
             "confidence_level": confidence_level,
             "tags": tags,
         }
+
+    def classify(self, data: dict) -> Verdict:
+        confidence = data.get("confidence_level", -1)
+
+        if confidence < 0:
+            return Verdict.NO_DATA
+        elif confidence < 10:
+            return Verdict.BENIGN
+        elif confidence < 0.5:
+            return Verdict.SUSPICIOUS
+        else:
+            return Verdict.MALICIOUS
