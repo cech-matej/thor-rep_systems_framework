@@ -11,6 +11,7 @@ from collectors.api.otx_alienvault import OTXAlienvaultCollector
 from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
+from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
 
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
@@ -32,6 +33,7 @@ def get_all_collectors():
         PulsediveCollector(),
         ThreatFoxCollector(),
         VirusTotalCollector(),
+        WhoisXMLAPIDomainReputationCollector(),
 
         # HTML collectors
         ProjectHoneypotCollector(),

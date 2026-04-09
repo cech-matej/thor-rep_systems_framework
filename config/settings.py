@@ -60,6 +60,7 @@ OTX_ALIENVAULT_API_KEY: str | None = env("OTX_ALIENVAULT_API_KEY")
 PULSEDIVE_API_KEY: str | None = env("PULSEDIVE_API_KEY")
 THREATFOX_API_KEY: str | None = env("THREATFOX_API_KEY")
 VIRUSTOTAL_API_KEY: str | None = env("VIRUSTOTAL_API_KEY")
+WHOISXML_DOMAIN_REPUTATION_API_KEY: str | None = env("WHOISXML_DOMAIN_REPUTATION_API_KEY")
 
 
 # ============================================================

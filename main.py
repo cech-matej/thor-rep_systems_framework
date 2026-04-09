@@ -15,6 +15,7 @@ from collectors.api.otx_alienvault import OTXAlienvaultCollector
 from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
+from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
 
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
@@ -57,22 +58,23 @@ if __name__ == "__main__":
         time.sleep(.5)
 
     collectors = [
-        # AbuseIPDBCollector(),
-        # CloudflareRadarCollector(),
-        # CriminalIPCollector(),
-        # FortiGuardCollector(),
-        # GoogleSafeBrowsingCollector(),
-        # GreyNoiseCollector(),
-        # HybridAnalysisCollector(),
-        # NerdCollector(),
-        # OpentipKasperskyCollector(),
+        AbuseIPDBCollector(),
+        CloudflareRadarCollector(),
+        CriminalIPCollector(),
+        FortiGuardCollector(),
+        GoogleSafeBrowsingCollector(),
+        GreyNoiseCollector(),
+        HybridAnalysisCollector(),
+        NerdCollector(),
+        OpentipKasperskyCollector(),
         OTXAlienvaultCollector(),
-        # PulsediveCollector(),
-        # ThreatFoxCollector(),
-        # VirusTotalCollector(),
+        PulsediveCollector(),
+        ThreatFoxCollector(),
+        VirusTotalCollector(),
+        WhoisXMLAPIDomainReputationCollector(),
 
-        # ProjectHoneypotCollector(),
-        # URLVoid(),
+        ProjectHoneypotCollector(),
+        URLVoid(),
     ]
 
     domains = load_domains("test_domains.json")

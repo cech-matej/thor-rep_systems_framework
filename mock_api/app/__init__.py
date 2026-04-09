@@ -20,6 +20,7 @@ from .pulsedive import pulsedive_routes
 from .threatfox import threatfox_routes
 from .urlvoid import urlvoid_routes
 from .virustotal import virustotal_routes
+from .whoisxmlapi_domain_reputation import whoisxml_domain_reputation_routes
 
 def create_app():
     app = Flask(__name__)
@@ -40,5 +41,6 @@ def create_app():
     app.register_blueprint(threatfox_routes)
     app.register_blueprint(urlvoid_routes)
     app.register_blueprint(virustotal_routes)
+    app.register_blueprint(whoisxml_domain_reputation_routes)
 
     return app
