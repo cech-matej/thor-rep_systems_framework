@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import GOOGLE_SAFE_BROWSING_API_KEY
 from utils.ip import is_ipv6
 from utils.verdict import Verdict
 
 
-class GoogleSafeBrowsingCollector(BaseCollector):
+class GoogleSafeBrowsingCollector(APICollector):
     name = "google_safe_browsing"
 
     supports_domain = True

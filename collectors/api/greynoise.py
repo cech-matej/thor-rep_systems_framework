@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import GREYNOISE_API_KEY
 from utils.ip import is_ipv4
 from utils.verdict import Verdict
 
 
-class GreyNoiseCollector(BaseCollector):
+class GreyNoiseCollector(APICollector):
     name = "greynoise"
 
     supports_domain = False

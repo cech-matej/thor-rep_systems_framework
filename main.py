@@ -2,17 +2,22 @@ import threading
 import time
 import json
 
-from collectors.abuseipdb import AbuseIPDBCollector
-from collectors.cloudflare_radar import CloudflareRadarCollector
-from collectors.criminalip import CriminalIPCollector
-from collectors.fortiguard import FortiGuardCollector
-from collectors.google_safe_browsing import GoogleSafeBrowsingCollector
-from collectors.greynoise import GreyNoiseCollector
-from collectors.hybrid_analysis import HybridAnalysisCollector
-from collectors.nerd import NerdCollector
-from collectors.pulsedive import PulsediveCollector
-from collectors.threatfox import ThreatFoxCollector
-from collectors.virustotal import VirusTotalCollector
+from collectors.api.abuseipdb import AbuseIPDBCollector
+from collectors.api.cloudflare_radar import CloudflareRadarCollector
+from collectors.api.criminalip import CriminalIPCollector
+from collectors.api.fortiguard import FortiGuardCollector
+from collectors.api.google_safe_browsing import GoogleSafeBrowsingCollector
+from collectors.api.greynoise import GreyNoiseCollector
+from collectors.api.hybrid_analysis import HybridAnalysisCollector
+from collectors.api.nerd import NerdCollector
+from collectors.api.opentip_kaspersky import OpentipKasperskyCollector
+from collectors.api.pulsedive import PulsediveCollector
+from collectors.api.threatfox import ThreatFoxCollector
+from collectors.api.virustotal import VirusTotalCollector
+
+from collectors.html.project_honeypot import ProjectHoneypotCollector
+from collectors.html.urlvoid import URLVoid
+
 from collectors.visualization.visualize import visualize
 from mock_api.run import run_mock_api
 from config.settings import MOCK_API_HOST, MOCK_API_PORT, USE_MOCK_API
@@ -51,17 +56,21 @@ if __name__ == "__main__":
         time.sleep(.5)
 
     collectors = [
-        AbuseIPDBCollector(),
-        CloudflareRadarCollector(),
-        CriminalIPCollector(),
-        FortiGuardCollector(),
-        GoogleSafeBrowsingCollector(),
-        GreyNoiseCollector(),
-        HybridAnalysisCollector(),
-        NerdCollector(),
-        PulsediveCollector(),
-        ThreatFoxCollector(),
-        VirusTotalCollector()
+        # AbuseIPDBCollector(),
+        # CloudflareRadarCollector(),
+        # CriminalIPCollector(),
+        # FortiGuardCollector(),
+        # GoogleSafeBrowsingCollector(),
+        # GreyNoiseCollector(),
+        # HybridAnalysisCollector(),
+        # NerdCollector(),
+        # OpentipKasperskyCollector(),
+        # PulsediveCollector(),
+        # ThreatFoxCollector(),
+        # VirusTotalCollector(),
+
+        # ProjectHoneypotCollector(),
+        URLVoid(),
     ]
 
     domains = load_domains("test_domains.json")

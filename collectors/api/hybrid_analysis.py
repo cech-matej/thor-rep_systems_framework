@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import HYBRID_ANALYSIS_API_KEY
 from utils.ip import is_ipv4, is_ipv6
 from utils.verdict import Verdict
 
 
-class HybridAnalysisCollector(BaseCollector):
+class HybridAnalysisCollector(APICollector):
     name = "hybrid_analysis"
 
     supports_domain = True

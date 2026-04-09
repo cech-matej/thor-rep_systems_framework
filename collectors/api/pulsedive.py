@@ -1,9 +1,9 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import PULSEDIVE_API_KEY
 from utils.verdict import Verdict
 
 
-class PulsediveCollector(BaseCollector):
+class PulsediveCollector(APICollector):
     name = "pulsedive"
 
     supports_domain = True

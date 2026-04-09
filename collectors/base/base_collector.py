@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import requests
 
 from config.settings import USE_MOCK_API, MOCK_API_BASE
 
@@ -11,14 +10,20 @@ class BaseCollector(ABC):
     supports_ipv4 = False
     supports_ipv6 = False
 
-    BASE_URL = ""  # to be defined in child
-    ENDPOINT = ""  # to be defined in child
+    BASE_URL = ""  # To be defined in child classes
+    ENDPOINT = ""  # To be defined in child classes
 
     def __init__(self):
-        self.session = requests.Session()
+        self.session = None  # Will initialize session if needed (like HTTP session or DNS resolver)
 
     @abstractmethod
     def collect(self, address: str) -> dict:
+        """Method to collect data from the source"""
+        pass
+
+    @abstractmethod
+    def classify(self, data: dict):
+        """Method to classify the collected data"""
         pass
 
     def url(self) -> str:
@@ -33,10 +38,3 @@ class BaseCollector(ABC):
             base = self.BASE_URL
 
         return f"{base}{self.ENDPOINT}"
-
-    def classify(self, data: dict):
-        """
-        Convert collected data into a Verdict.
-        Must be implemented by each collector.
-        """
-        raise NotImplementedError

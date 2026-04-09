@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import CLOUDFLARE_RADAR_API_KEY, CLOUDFLARE_USERID
 from utils.ip import is_ipv4, is_ipv6
 from utils.verdict import Verdict
 
 
-class CloudflareRadarCollector(BaseCollector):
+class CloudflareRadarCollector(APICollector):
     name = "cloudflare_radar"
 
     supports_domain = True

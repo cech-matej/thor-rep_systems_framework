@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import THREATFOX_API_KEY
 from utils.ip import is_ipv6
 from utils.verdict import Verdict
 
 
-class ThreatFoxCollector(BaseCollector):
+class ThreatFoxCollector(APICollector):
     name = "threatfox"
 
     supports_domain = True

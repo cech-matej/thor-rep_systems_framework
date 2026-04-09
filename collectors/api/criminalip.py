@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import CRIMINALIP_API_KEY
 from utils.ip import is_ipv4, is_ipv6
 from utils.verdict import Verdict
 
 
-class CriminalIPCollector(BaseCollector):
+class CriminalIPCollector(APICollector):
     name = "criminalip"
 
     supports_domain = False

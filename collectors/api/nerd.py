@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import NERD_API_KEY
 from utils.ip import is_ipv4
 from utils.verdict import Verdict
 
 
-class NerdCollector(BaseCollector):
+class NerdCollector(APICollector):
     name = "nerd"
 
     supports_domain = False

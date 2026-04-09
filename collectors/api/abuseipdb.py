@@ -1,9 +1,9 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import ABUSEIPDB_API_KEY
 from utils.verdict import Verdict
 
 
-class AbuseIPDBCollector(BaseCollector):
+class AbuseIPDBCollector(APICollector):
     name = "abuseipdb"
 
     supports_domain = False

@@ -1,8 +1,8 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from utils.verdict import Verdict
 
 
-class FortiGuardCollector(BaseCollector):
+class FortiGuardCollector(APICollector):
     name = "fortiguard"
 
     supports_domain = True

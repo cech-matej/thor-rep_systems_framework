@@ -1,10 +1,10 @@
-from collectors.base import BaseCollector
+from collectors.base.api_collector import APICollector
 from config.settings import VIRUSTOTAL_API_KEY
 from utils.ip import is_ipv4, is_ipv6
 from utils.verdict import Verdict
 
 
-class VirusTotalCollector(BaseCollector):
+class VirusTotalCollector(APICollector):
     name = "virustotal"
 
     supports_domain = True
