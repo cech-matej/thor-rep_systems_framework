@@ -14,6 +14,7 @@ from .greynoise import greynoise_routes
 from .hybrid_analysis import hybrid_analysis_routes
 from .nerd import nerd_routes
 from .opentip_kaspersky import opentip_kaspersky_routes
+from .otx_alienvault import otx_alienvault_routes
 from .project_honeypot import project_honeypot_routes
 from .pulsedive import pulsedive_routes
 from .threatfox import threatfox_routes
@@ -33,6 +34,7 @@ def create_app():
     app.register_blueprint(hybrid_analysis_routes)
     app.register_blueprint(nerd_routes)
     app.register_blueprint(opentip_kaspersky_routes)
+    app.register_blueprint(otx_alienvault_routes)
     app.register_blueprint(project_honeypot_routes)
     app.register_blueprint(pulsedive_routes)
     app.register_blueprint(threatfox_routes)

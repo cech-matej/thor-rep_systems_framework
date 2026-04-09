@@ -7,6 +7,7 @@ from collectors.api.greynoise import GreyNoiseCollector
 from collectors.api.hybrid_analysis import HybridAnalysisCollector
 from collectors.api.nerd import NerdCollector
 from collectors.api.opentip_kaspersky import OpentipKasperskyCollector
+from collectors.api.otx_alienvault import OTXAlienvaultCollector
 from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
@@ -27,6 +28,7 @@ def get_all_collectors():
         HybridAnalysisCollector(),
         NerdCollector(),
         OpentipKasperskyCollector(),
+        OTXAlienvaultCollector(),
         PulsediveCollector(),
         ThreatFoxCollector(),
         VirusTotalCollector(),
