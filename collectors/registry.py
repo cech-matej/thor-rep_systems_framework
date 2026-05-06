@@ -12,6 +12,8 @@ from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
 from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
+from collectors.dns.spamhaus_dbl import SpamhausDBLCollector
+from collectors.dns.spamhaus_zen import SpamhausZenCollector
 
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
@@ -34,6 +36,10 @@ def get_all_collectors():
         ThreatFoxCollector(),
         VirusTotalCollector(),
         WhoisXMLAPIDomainReputationCollector(),
+
+        # DNS collectors
+        SpamhausDBLCollector(),
+        SpamhausZenCollector(),
 
         # HTML collectors
         ProjectHoneypotCollector(),

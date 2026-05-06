@@ -17,6 +17,9 @@ from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
 from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
 
+from collectors.dns.spamhaus_dbl import SpamhausDBLCollector
+from collectors.dns.spamhaus_zen import SpamhausZenCollector
+
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
 
@@ -72,6 +75,9 @@ if __name__ == "__main__":
         ThreatFoxCollector(),
         VirusTotalCollector(),
         WhoisXMLAPIDomainReputationCollector(),
+
+        SpamhausDBLCollector(),
+        SpamhausZenCollector(),
 
         ProjectHoneypotCollector(),
         URLVoid(),

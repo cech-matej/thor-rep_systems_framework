@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 import dns.resolver
+import requests
 
 from collectors.base.base_collector import BaseCollector
+from config.settings import USE_MOCK_API
 
 
 class DNSCollector(BaseCollector, ABC):
@@ -12,22 +14,7 @@ class DNSCollector(BaseCollector, ABC):
     def __init__(self):
         super().__init__()
         self.resolver = dns.resolver.Resolver()  # For DNS resolution
-
-    # def collect(self, address: str) -> dict:
-    #     """
-    #     Collect A and AAAA DNS records for the given address.
-    #     """
-    #     dns_data = self.resolve_dns(address)
-    #     return dns_data
-    #
-    # def classify(self, data: dict):
-    #     # Example: Classify based on the existence of DNS records
-    #     if data['A']:
-    #         return "IPv4 found"
-    #     elif data['AAAA']:
-    #         return "IPv6 found"
-    #     else:
-    #         return "No IP records found"
+        self.session = requests if USE_MOCK_API else None
 
     @abstractmethod
     def collect(self, address: str) -> dict:
@@ -47,13 +34,15 @@ class DNSCollector(BaseCollector, ABC):
         :param record_type: The type of DNS record to resolve (default is "A").
         :return: A dictionary of resolved records.
         """
-        dns_records = {record_type: []}
 
         try:
-            # Perform the DNS query based on the record_type parameter
-            records = self.resolver.resolve(address, record_type)
-            dns_records[record_type] = [rdata.to_text() for rdata in records]
-        except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.resolver.Timeout):
-            dns_records[record_type] = []  # Empty list if no records are found
+            answers = self.resolver.resolve(address, record_type)
+            return [r.to_text() for r in answers]
 
-        return dns_records
+        except (
+                dns.resolver.NoAnswer,
+                dns.resolver.NXDOMAIN,
+                dns.resolver.Timeout,
+                dns.resolver.NoNameservers,
+        ):
+            return []
