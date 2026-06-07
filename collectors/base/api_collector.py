@@ -1,6 +1,7 @@
 import requests
 from abc import ABC, abstractmethod
 from collectors.base.base_collector import BaseCollector
+from utils.exceptions import RateLimitException
 
 
 class APICollector(BaseCollector, ABC):
@@ -25,3 +26,7 @@ class APICollector(BaseCollector, ABC):
     def classify(self, data: dict):
         """This method should be implemented by subclasses to classify the collected data."""
         pass
+
+    def validate_response(self, response):
+        if self.is_rate_limited(response):
+            raise RateLimitException

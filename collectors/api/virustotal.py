@@ -1,5 +1,6 @@
 from collectors.base.api_collector import APICollector
 from config.settings import VIRUSTOTAL_API_KEY
+from utils.exceptions import RateLimitException
 from utils.ip import is_ipv4, is_ipv6
 from utils.verdict import Verdict
 
@@ -34,6 +35,8 @@ class VirusTotalCollector(APICollector):
             url = f"{self.url()}{address}"
 
         response = self.session.get(url, headers=headers)
+
+        self.validate_response(response)
 
         if response.ok:
             json_response = response.json()

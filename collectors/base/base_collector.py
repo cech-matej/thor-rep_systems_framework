@@ -38,3 +38,11 @@ class BaseCollector(ABC):
             base = self.BASE_URL
 
         return f"{base}{self.ENDPOINT}"
+
+    @staticmethod
+    def is_rate_limited(response):
+        """
+        Default implementation. Most APIs use HTTP 429.
+        """
+
+        return response.status_code == 429

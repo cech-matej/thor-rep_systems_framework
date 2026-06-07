@@ -70,3 +70,11 @@ WHOISXML_DOMAIN_REPUTATION_API_KEY: str | None = env("WHOISXML_DOMAIN_REPUTATION
 
 HTTP_TIMEOUT: int = int(env("HTTP_TIMEOUT", 10))
 HTTP_RETRIES: int = int(env("HTTP_RETRIES", 3))
+
+# ============================================================
+# COLLECTOR SETTINGS
+# ============================================================
+
+ENABLE_CACHE: bool = env("ENABLE_CACHE", "true").lower() == "true"
+RESUME_COLLECTION: bool = env("RESUME_COLLECTION", "true").lower() == "true"
+SAVE_PROGRESS: bool = env("SAVE_PROGRESS", "true").lower() == "true"

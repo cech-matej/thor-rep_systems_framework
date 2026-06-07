@@ -16,6 +16,7 @@ from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
 from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
+from collectors.collector_runner import CollectorRunner
 
 from collectors.dns.spamhaus_dbl import SpamhausDBLCollector
 from collectors.dns.spamhaus_zen import SpamhausZenCollector
@@ -61,26 +62,26 @@ if __name__ == "__main__":
         time.sleep(.5)
 
     collectors = [
-        AbuseIPDBCollector(),
-        CloudflareRadarCollector(),
-        CriminalIPCollector(),
-        FortiGuardCollector(),
-        GoogleSafeBrowsingCollector(),
-        GreyNoiseCollector(),
-        HybridAnalysisCollector(),
-        NerdCollector(),
-        OpentipKasperskyCollector(),
-        OTXAlienvaultCollector(),
-        PulsediveCollector(),
-        ThreatFoxCollector(),
+        # AbuseIPDBCollector(),
+        # CloudflareRadarCollector(),
+        # CriminalIPCollector(),
+        # FortiGuardCollector(),
+        # GoogleSafeBrowsingCollector(),
+        # GreyNoiseCollector(),
+        # HybridAnalysisCollector(),
+        # NerdCollector(),
+        # OpentipKasperskyCollector(),
+        # OTXAlienvaultCollector(),
+        # PulsediveCollector(),
+        # ThreatFoxCollector(),
         VirusTotalCollector(),
-        WhoisXMLAPIDomainReputationCollector(),
-
-        SpamhausDBLCollector(),
-        SpamhausZenCollector(),
-
-        ProjectHoneypotCollector(),
-        URLVoid(),
+        # WhoisXMLAPIDomainReputationCollector(),
+        #
+        # SpamhausDBLCollector(),
+        # SpamhausZenCollector(),
+        #
+        # ProjectHoneypotCollector(),
+        # URLVoid(),
     ]
 
     domains = load_domains("test_domains.json")
@@ -91,49 +92,15 @@ if __name__ == "__main__":
     for collector in collectors:
         print(f"Running collector: {collector.name}")
 
-        ip_results = {}
-        dn_results = {}
+        runner = CollectorRunner(collector)
+        runner.run(domains, ipv4_set, ipv6_set)
 
-        # collect IPv4
-        if collector.supports_ipv4:
-            for ip in ipv4_set:
-                ip_results[ip] = collector.collect(ip)
-
-        # collect IPv6
-        if collector.supports_ipv6:
-            for ip in ipv6_set:
-                ip_results[ip] = collector.collect(ip)
-
-        # collect domain names
-        if collector.supports_domain:
-            for domain in domains:
-                dn = domain["domain_name"]
-                dn_results[dn] = collector.collect(dn)
-
-        enriched_domains = []
-
-        for domain in domains:
-            entry = dict(domain)
-
-            dn = domain["domain_name"]
-
-            if collector.supports_domain:
-                entry["dn_data"] = dn_results.get(dn)
-
-            if collector.supports_ipv4:
-                for ip in domain.get("A", []):
-                    entry[ip] = ip_results.get(ip)
-
-            if collector.supports_ipv6:
-                for ip in domain.get("AAAA", []):
-                    entry[ip] = ip_results.get(ip)
-
-            enriched_domains.append(entry)
+        output = runner.build_output(domains)
 
         output_file = output_dir / f"{collector.name}.json"
 
         with open(output_file, "w") as f:
-            json.dump(enriched_domains, f, indent=2)
+            json.dump(output, f, indent=2)
 
         print(f"Saved: {output_file}")
 
