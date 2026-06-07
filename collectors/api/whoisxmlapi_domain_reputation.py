@@ -26,6 +26,8 @@ class WhoisXMLAPIDomainReputationCollector(APICollector):
 
         response = requests.get(f"{self.url()}?apiKey={self.api_key}&domainName={address}", headers=headers)
 
+        self.validate_response(response)
+
         if response.ok:
             json_response = response.json()
 

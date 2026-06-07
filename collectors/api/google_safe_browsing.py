@@ -50,6 +50,8 @@ class GoogleSafeBrowsingCollector(APICollector):
 
         response = self.session.post(url, headers=headers, json=post_data)
 
+        self.validate_response(response)
+
         if response.ok:
             results = response.json()
             counts = {

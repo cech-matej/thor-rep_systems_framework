@@ -35,6 +35,8 @@ class ThreatFoxCollector(APICollector):
 
         response = self.session.post(f"{self.url()}", headers=headers, json=post_data)
 
+        self.validate_response(response)
+
         threat_type = ""
         malware = ""
         confidence_level = ""

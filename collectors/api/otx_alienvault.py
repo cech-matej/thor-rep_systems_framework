@@ -40,6 +40,8 @@ class OTXAlienvaultCollector(APICollector):
 
         response = requests.get(f"{self.url()}{address}{self.TYPE}", headers=headers)
 
+        self.validate_response(response)
+
         if response.ok:
             json_response = response.json()
 

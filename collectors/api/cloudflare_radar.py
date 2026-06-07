@@ -40,6 +40,8 @@ class CloudflareRadarCollector(APICollector):
 
         response = self.session.get(url, headers=headers)
 
+        self.validate_response(response)
+
         if response.ok:
             results = response.json().get("results", [])
             mal = results[0]["verdicts"]["malicious"] if results else None

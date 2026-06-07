@@ -32,6 +32,8 @@ class HybridAnalysisCollector(APICollector):
 
         response = self.session.post(f"{self.url()}", headers=headers, data=post_data)
 
+        self.validate_response(response)
+
         # Initialize counters
         malicious_cnt = 0
         suspicious_cnt = 0

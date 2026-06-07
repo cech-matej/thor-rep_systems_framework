@@ -29,6 +29,8 @@ class AbuseIPDBCollector(APICollector):
             params={"ipAddress": address},
         )
 
+        self.validate_response(response)
+
         data = response.json().get("data", {}) if response.ok else {}
 
         return {

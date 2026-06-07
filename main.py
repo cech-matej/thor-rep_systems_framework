@@ -62,26 +62,26 @@ if __name__ == "__main__":
         time.sleep(.5)
 
     collectors = [
-        # AbuseIPDBCollector(),
-        # CloudflareRadarCollector(),
-        # CriminalIPCollector(),
-        # FortiGuardCollector(),
-        # GoogleSafeBrowsingCollector(),
-        # GreyNoiseCollector(),
-        # HybridAnalysisCollector(),
-        # NerdCollector(),
-        # OpentipKasperskyCollector(),
-        # OTXAlienvaultCollector(),
-        # PulsediveCollector(),
-        # ThreatFoxCollector(),
+        AbuseIPDBCollector(),
+        CloudflareRadarCollector(),
+        CriminalIPCollector(),
+        FortiGuardCollector(),
+        GoogleSafeBrowsingCollector(),
+        GreyNoiseCollector(),
+        HybridAnalysisCollector(),
+        NerdCollector(),
+        OpentipKasperskyCollector(),
+        OTXAlienvaultCollector(),
+        PulsediveCollector(),
+        ThreatFoxCollector(),
         VirusTotalCollector(),
-        # WhoisXMLAPIDomainReputationCollector(),
-        #
-        # SpamhausDBLCollector(),
-        # SpamhausZenCollector(),
-        #
-        # ProjectHoneypotCollector(),
-        # URLVoid(),
+        WhoisXMLAPIDomainReputationCollector(),
+
+        SpamhausDBLCollector(),
+        SpamhausZenCollector(),
+
+        ProjectHoneypotCollector(),
+        URLVoid(),
     ]
 
     domains = load_domains("test_domains.json")

@@ -32,6 +32,8 @@ class CriminalIPCollector(APICollector):
 
         response = self.session.get(url, headers=headers)
 
+        self.validate_response(response)
+
         if response.ok:
             return response.json()
         else:

@@ -31,6 +31,8 @@ class NerdCollector(APICollector):
 
         response = self.session.get(url, headers=headers)
 
+        self.validate_response(response)
+
         if response.ok:
             results = response.json()
             return { "reputation": results.get("rep", -1) }

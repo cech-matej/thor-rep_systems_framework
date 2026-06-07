@@ -33,6 +33,8 @@ class OpentipKasperskyCollector(APICollector):
 
         response = self.session.get(f"{self.url()}?request={address}", headers=headers)
 
+        self.validate_response(response)
+
         return response.json()
 
     def classify(self, data: dict) -> Verdict:
