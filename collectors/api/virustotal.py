@@ -14,7 +14,7 @@ class VirusTotalCollector(APICollector):
 
     BASE_URL = "https://www.virustotal.com"
 
-    ENDPOINT_IP = "/api/v3/ip_address/"
+    ENDPOINT_IP = "/api/v3/ip_addresses/"
     ENDPOINT_DN = "/api/v3/domains/"
 
     def __init__(self):
