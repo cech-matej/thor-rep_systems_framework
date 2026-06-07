@@ -11,7 +11,7 @@ class HybridAnalysisCollector(APICollector):
     supports_ipv4 = True
     supports_ipv6 = True
 
-    BASE_URL = "https://www.hybrid-analysis.com"
+    BASE_URL = "https://hybrid-analysis.com"
     ENDPOINT = "/api/v2/search/terms"  # target sent in POST body
 
     def __init__(self):
