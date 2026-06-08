@@ -29,7 +29,7 @@ def generate_report():
         }
     })
 
-@virustotal_routes.route('/api/v3/ip_address/<ip>', methods=['GET'])
+@virustotal_routes.route('/api/v3/ip_addresses/<ip>', methods=['GET'])
 def ip_report(ip):
     try:
         # Try to parse the IP address, this will validate if it's either IPv4 or IPv6
