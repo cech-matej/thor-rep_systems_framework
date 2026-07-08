@@ -4,10 +4,12 @@ from collectors.api.criminalip import CriminalIPCollector
 from collectors.api.fortiguard import FortiGuardCollector
 from collectors.api.google_safe_browsing import GoogleSafeBrowsingCollector
 from collectors.api.greynoise import GreyNoiseCollector
+from collectors.api.griffinguard import GriffinGuardCollector
 from collectors.api.hybrid_analysis import HybridAnalysisCollector
 from collectors.api.nerd import NerdCollector
 from collectors.api.opentip_kaspersky import OpentipKasperskyCollector
 from collectors.api.otx_alienvault import OTXAlienvaultCollector
+from collectors.api.phishing_initiative import PhishingInitiativeCollector
 from collectors.api.pulsedive import PulsediveCollector
 from collectors.api.threatfox import ThreatFoxCollector
 from collectors.api.virustotal import VirusTotalCollector
@@ -28,10 +30,12 @@ def get_all_collectors():
         FortiGuardCollector(),
         GoogleSafeBrowsingCollector(),
         GreyNoiseCollector(),
+        GriffinGuardCollector(),
         HybridAnalysisCollector(),
         NerdCollector(),
         OpentipKasperskyCollector(),
         OTXAlienvaultCollector(),
+        PhishingInitiativeCollector(),
         PulsediveCollector(),
         ThreatFoxCollector(),
         VirusTotalCollector(),
