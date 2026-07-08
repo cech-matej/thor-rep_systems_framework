@@ -51,7 +51,7 @@ class OTXAlienvaultCollector(APICollector):
         return {}
 
     def classify(self, data: dict) -> Verdict:
-        pulse_count = data.get("pulse_count")
+        pulse_count = data.get("pulse_count", 0)
 
         if pulse_count == 0:
             return Verdict.NO_DATA
