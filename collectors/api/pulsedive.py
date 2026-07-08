@@ -34,13 +34,13 @@ class PulsediveCollector(APICollector):
             return {}
 
     def classify(self, data: dict) -> Verdict:
-        risk = data.get("score", {}).get("risk", None)
+        risk = data.get("risk", None)
 
         if risk is None or risk == "unknown":
             return Verdict.NO_DATA
         elif risk == "none":
             return Verdict.BENIGN
-        elif risk in ["low", "medium"]:
+        elif risk in ["very low", "low"]:
             return Verdict.SUSPICIOUS
-        else:
-            return Verdict.MALICIOUS
+
+        return Verdict.MALICIOUS
