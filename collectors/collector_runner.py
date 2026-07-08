@@ -37,6 +37,7 @@ class CollectorRunner:
 
         try:
             result = self.collector.collect(entity)
+            result["_verdict"] = (self.collector.classify(result)).value
 
             bucket[entity] = {
                 "status": "success",
