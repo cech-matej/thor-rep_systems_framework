@@ -80,3 +80,12 @@ HTTP_RETRIES: int = int(env("HTTP_RETRIES", 3))
 ENABLE_CACHE: bool = env("ENABLE_CACHE", "true").lower() == "true"
 RESUME_COLLECTION: bool = env("RESUME_COLLECTION", "true").lower() == "true"
 SAVE_PROGRESS: bool = env("SAVE_PROGRESS", "true").lower() == "true"
+
+# ============================================================
+# LABELER INTENDED SETTINGS
+# ============================================================
+
+EXECUTION_LIMIT_PER_SERVICE: int = int(env("EXECUTION_LIMIT_PER_SERVICE", 10))
+SEC_TIMEOUT_PER_REQUEST: float = float(env("SEC_TIMEOUT_PER_REQUEST", 1))
+
+WEBHOOK_URL: str | None = env("WEBHOOK_URL")

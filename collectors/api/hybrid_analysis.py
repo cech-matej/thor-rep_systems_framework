@@ -9,7 +9,7 @@ class HybridAnalysisCollector(APICollector):
 
     supports_domain = True
     supports_ipv4 = True
-    supports_ipv6 = True
+    supports_ipv6 = False
 
     BASE_URL = "https://hybrid-analysis.com"
     ENDPOINT = "/api/v2/search/terms"  # target sent in POST body

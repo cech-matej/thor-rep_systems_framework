@@ -12,7 +12,7 @@ class ThreatFoxCollector(APICollector):
     supports_ipv6 = False
 
     BASE_URL = "https://threatfox-api.abuse.ch"
-    ENDPOINT = "/api/v1"  # target sent in POST body
+    ENDPOINT = "/api/v1/"  # target sent in POST body
 
     def __init__(self):
         super().__init__()
@@ -39,18 +39,19 @@ class ThreatFoxCollector(APICollector):
 
         threat_type = ""
         malware = ""
-        confidence_level = ""
+        confidence_level = -1
         tags = []
 
         if response.ok:
             results = response.json()
+
             if results.get("query_status") == "ok" and "data" in results:
                 data_list = results["data"]
                 if isinstance(data_list, list) and len(data_list) > 0:
                     data = data_list[0]  # take first item
                     threat_type = data.get("threat_type", "")
                     malware = data.get("malware", "")
-                    confidence_level = data.get("confidence_level", "")
+                    confidence_level = data.get("confidence_level", -1)
                     tags = data.get("tags", [])
 
         return {
