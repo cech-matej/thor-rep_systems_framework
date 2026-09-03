@@ -16,6 +16,7 @@ from collectors.api.virustotal import VirusTotalCollector
 from collectors.api.whoisxmlapi_domain_reputation import WhoisXMLAPIDomainReputationCollector
 from collectors.dns.spamhaus_dbl import SpamhausDBLCollector
 from collectors.dns.spamhaus_zen import SpamhausZenCollector
+from collectors.dns.surbl import SURBLCollector
 
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
@@ -44,6 +45,7 @@ def get_all_collectors():
         # DNS collectors
         SpamhausDBLCollector(),
         SpamhausZenCollector(),
+        SURBLCollector(),
 
         # HTML collectors
         ProjectHoneypotCollector(),

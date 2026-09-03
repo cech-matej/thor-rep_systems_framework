@@ -19,6 +19,7 @@ from .project_honeypot import project_honeypot_routes
 from .pulsedive import pulsedive_routes
 from .spamhaus_dbl import spamhaus_dbl_routes
 from .spamhaus_zen import spamhaus_zen_routes
+from .surbl import surbl_routes
 from .threatfox import threatfox_routes
 from .urlvoid import urlvoid_routes
 from .virustotal import virustotal_routes
@@ -42,6 +43,7 @@ def create_app():
     app.register_blueprint(pulsedive_routes)
     app.register_blueprint(spamhaus_dbl_routes)
     app.register_blueprint(spamhaus_zen_routes)
+    app.register_blueprint(surbl_routes)
     app.register_blueprint(threatfox_routes)
     app.register_blueprint(urlvoid_routes)
     app.register_blueprint(virustotal_routes)

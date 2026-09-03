@@ -20,6 +20,7 @@ from collectors.collector_runner import CollectorRunner
 
 from collectors.dns.spamhaus_dbl import SpamhausDBLCollector
 from collectors.dns.spamhaus_zen import SpamhausZenCollector
+from collectors.dns.surbl import SURBLCollector
 
 from collectors.html.project_honeypot import ProjectHoneypotCollector
 from collectors.html.urlvoid import URLVoid
@@ -79,6 +80,7 @@ if __name__ == "__main__":
 
         SpamhausDBLCollector(),
         SpamhausZenCollector(),
+        SURBLCollector(),
 
         ProjectHoneypotCollector(),
         URLVoid(),
