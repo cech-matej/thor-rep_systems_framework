@@ -39,34 +39,45 @@ class VirusTotalCollector(APICollector):
         self.validate_response(response)
 
         if response.ok:
-            json_response = response.json()
-            data = json_response.get("data")
-            if data and "attributes" in data:
-                attributes = data["attributes"]
-                last_stats = attributes.get("last_analysis_stats", {})
-                malicious = last_stats.get("malicious", -1)
-                suspicious = last_stats.get("suspicious", -1)
-                undetected = last_stats.get("undetected", -1)
-                harmless = last_stats.get("harmless", -1)
-                return {
-                    "reputation": attributes.get("reputation", -1),
-                    "malicious": malicious,
-                    "suspicious": suspicious,
-                    "undetected": undetected,
-                    "harmless": harmless,
-                }
+            # json_response = response.json()
+            # data = json_response.get("data")
+            # if data and "attributes" in data:
+            #     attributes = data["attributes"]
+            #     last_stats = attributes.get("last_analysis_stats", {})
+            #     malicious = last_stats.get("malicious", -1)
+            #     suspicious = last_stats.get("suspicious", -1)
+            #     undetected = last_stats.get("undetected", -1)
+            #     harmless = last_stats.get("harmless", -1)
+            #     return {
+            #         "reputation": attributes.get("reputation", -1),
+            #         "malicious": malicious,
+            #         "suspicious": suspicious,
+            #         "undetected": undetected,
+            #         "harmless": harmless,
+            #     }
+
+            return response.json()
 
         return {
-            "reputation": -1,
-            "malicious": -1,
-            "suspicious": -1,
-            "undetected": -1,
-            "harmless": -1,
+            "data": {
+                "attributes": {
+                    "last_analysis_stats": {
+                        "malicious": -1,
+                        "suspicious": -1,
+                        "undetected": -1,
+                        "harmless": -1,
+                    },
+                    "reputation": -1,
+                }
+            }
         }
 
     def classify(self, data: dict) -> Verdict:
-        malicious = data.get("malicious", -1)
-        suspicious = data.get("suspicious", -1)
+        attributes = data.get("data", {}).get("attributes", {})
+        last_analysis = attributes.get("last_analysis_stats", {})
+
+        malicious = last_analysis.get("malicious", -1)
+        suspicious = last_analysis.get("suspicious", -1)
 
         # If at least one is -1, then no data was retrieved
         if malicious < 0:
