@@ -8,7 +8,7 @@ class GoogleSafeBrowsingCollector(APICollector):
     name = "google_safe_browsing"
 
     supports_domain = True
-    supports_ipv4 = True
+    supports_ipv4 = False
     supports_ipv6 = False  # original code skips IPv6
 
     BASE_URL = f"https://safebrowsing.googleapis.com"

@@ -9,7 +9,7 @@ class SURBLCollector(DNSCollector):
     name = "surbl"
 
     supports_domain = True
-    supports_ipv4 = True
+    supports_ipv4 = False
     supports_ipv6 = False
 
     BASE_URL = "multi.surbl.org"

@@ -8,7 +8,7 @@ class ThreatFoxCollector(APICollector):
     name = "threatfox"
 
     supports_domain = True
-    supports_ipv4 = True
+    supports_ipv4 = False
     supports_ipv6 = False
 
     BASE_URL = "https://threatfox-api.abuse.ch"

@@ -8,7 +8,7 @@ class OpentipKasperskyCollector(APICollector):
     name = "opentip_kaspersky"
 
     supports_domain = True
-    supports_ipv4 = True
+    supports_ipv4 = False
     supports_ipv6 = False
 
     BASE_URL = "https://opentip.kaspersky.com"

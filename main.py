@@ -86,15 +86,15 @@ if __name__ == "__main__":
         time.sleep(.5)
 
     collectors = [
-        AbuseIPDBCollector(),
+        # AbuseIPDBCollector(),
         CloudflareRadarCollector(),
         # CriminalIPCollector(),
         # FortiGuardCollector(),
         GoogleSafeBrowsingCollector(),
         # GreyNoiseCollector(),
         # GriffinGuardCollector(),
-        HybridAnalysisCollector(),
-        NerdCollector(),
+        # HybridAnalysisCollector(),
+        # NerdCollector(),
         OpentipKasperskyCollector(),
         # OTXAlienvaultCollector(),
         PhishingInitiativeCollector(),
@@ -104,14 +104,14 @@ if __name__ == "__main__":
         # WhoisXMLAPIDomainReputationCollector(),
         #
         SpamhausDBLCollector(),
-        SpamhausZenCollector(),
+        # SpamhausZenCollector(),
         SURBLCollector(),
         #
-        ProjectHoneypotCollector(),
+        # ProjectHoneypotCollector(),
         URLVoid(),
     ]
 
-    domains = load_domains("domains_latest_50k-split1.json")
+    domains = load_domains("domains.json")
     output_dir = create_output_dir(USE_MOCK_API)
 
     ipv4_set, ipv6_set = extract_unique_ips(domains)

@@ -8,7 +8,7 @@ class CloudflareRadarCollector(APICollector):
     name = "cloudflare_radar"
 
     supports_domain = True
-    supports_ipv4 = True
+    supports_ipv4 = False
     supports_ipv6 = False  # Radar doesn't support IPv6 in old code
 
     BASE_URL = "https://api.cloudflare.com"

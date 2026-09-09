@@ -9,8 +9,8 @@ class VirusTotalCollector(APICollector):
     name = "virustotal"
 
     supports_domain = True
-    supports_ipv4 = True
-    supports_ipv6 = True
+    supports_ipv4 = False
+    supports_ipv6 = False
 
     BASE_URL = "https://www.virustotal.com"
 
