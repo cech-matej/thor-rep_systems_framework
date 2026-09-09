@@ -1,4 +1,6 @@
+import concurrent.futures
 import datetime
+from pathlib import Path
 import threading
 import time
 import json
@@ -30,7 +32,7 @@ from collectors.html.urlvoid import URLVoid
 
 from collectors.visualization.visualize import visualize
 from mock_api.run import run_mock_api
-from config.settings import MOCK_API_HOST, MOCK_API_PORT, USE_MOCK_API
+from config.settings import MOCK_API_HOST, MOCK_API_PORT, USE_MOCK_API, MAX_WORKERS
 
 from utils.input import load_domains
 from utils.output import create_output_dir
@@ -80,6 +82,33 @@ def extract_unique_ips(domains):
     return ipv4, ipv6
 
 
+def run_collector(collector, domains, ipv4_set, ipv6_set, output_dir):
+    """
+    Worker function executed by each thread.
+    """
+
+    print(f"Running collector: {collector.name} | {datetime.datetime.now()}")
+    
+    runner = CollectorRunner(collector)
+    curr_status, collected_now, completed, collected_all_time = runner.run(domains, ipv4_set, ipv6_set)
+
+    output = runner.build_output(domains)
+    output_file = output_dir / f"{collector.name}.json"
+
+    with open(output_file, "w") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"Saved: {output_file}")
+
+    return {
+        "name": collector.name,
+        "curr_status": curr_status,
+        "collected_now": collected_now,
+        "completed": completed,
+        "collected_all_time": collected_all_time
+    }
+
+
 if __name__ == "__main__":
     if USE_MOCK_API:
         start_mock_api()
@@ -111,7 +140,7 @@ if __name__ == "__main__":
         URLVoid(),
     ]
 
-    domains = load_domains("domains.json")
+    domains = load_domains("test_domains.json")
     output_dir = create_output_dir(USE_MOCK_API)
 
     ipv4_set, ipv6_set = extract_unique_ips(domains)
@@ -119,24 +148,21 @@ if __name__ == "__main__":
     webhook_curr_services = []
     webhook_all_time_services = []
 
-    for collector in collectors:
-        print(f"Running collector: {collector.name} | {datetime.datetime.now()}")
+    print(f"Starting parallel execution with {MAX_WORKERS} worker(s)...")
 
-        runner = CollectorRunner(collector)
-        curr_status, collected_now, completed, collected_all_time = runner.run(domains, ipv4_set, ipv6_set)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        # Submit all collectors to the thread pool
+        futures = { executor.submit(run_collector, c, domains, ipv4_set, ipv6_set, output_dir): c for c in collectors }
 
-        webhook_curr_services.append((collector.name, curr_status, collected_now))
-        webhook_all_time_services.append((collector.name, completed, collected_all_time))
+        # Collect results as they complete (thread-safe aggregation)
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                result = future.result()
+                webhook_curr_services.append((result["name"], result["curr_status"], result["collected_now"]))
+                webhook_all_time_services.append((result["name"], result["completed"], result["collected_all_time"]))
 
-        output = runner.build_output(domains)
-
-        output_file = output_dir / f"{collector.name}.json"
-
-        with open(output_file, "w") as f:
-            json.dump(output, f, indent=2)
-
-        print(f"Saved: {output_file}")
-
-    # visualize(output_dir, show_values=True)
+            except Exception as e:
+                collector_name = futures[future].name
+                print(f"Error running {collector_name}: {e}")
 
     post_to_webhook(webhook_curr_services, webhook_all_time_services)

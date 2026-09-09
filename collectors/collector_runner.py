@@ -39,7 +39,7 @@ class CollectorRunner:
             return
 
         try:
-            print("collecting entity {}".format(entity))
+            print(f"{self.collector.name}> collecting entity {entity}")
 
             result = self.collector.collect(entity)
             result["_verdict"] = (self.collector.classify(result)).value
